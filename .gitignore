@@ -129,5 +129,9 @@ dmypy.json
 .pyre/
 
 # Pycharm files
-# 파이참 파일들은 싹다 무시하겠다는 뜻
+# 파이참 파일들 싹다 무시
 .idea/
+
+# Django files
+# 형상관리 필요 없음
+migrations/
