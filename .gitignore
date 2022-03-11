@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Pycharm files
+# 파이참 파일들은 싹다 무시하겠다는 뜻
+.idea/
