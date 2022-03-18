@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
 </head>
 <body>
-$END$
+<nav>
+    <a href="/blog/">Blog Main</a>
+</nav>
+<h1>{{ post.title }}</h1>
+<h4>{{ post.created_at }}</h4>
+<p>{{ post.content }}</p>
+<hr/>
+<h3>여기 댓글이 들어올 수 잇따</h3>
 </body>
 </html>
