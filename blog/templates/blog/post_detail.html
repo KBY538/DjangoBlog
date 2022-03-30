@@ -75,16 +75,23 @@
 
         <!-- Preview Image -->
 
-        {% if post.head_image %}
-        <img class="img-fluid rounded" src="{{ post.head_image.url }}" alt="">
-        {% else %}
-        <img class="card-img-top" src="{% static '/images/testimage.jpg' %}" alt="Card image cap">
-        {% endif %}
+            {% if post.head_image %}
+                <img class="img-fluid rounded" src="{{ post.head_image.url }}" alt="">
+            {% else %}
+                <img class="card-img-top" src="https://picsum.photos/seed/{{ post.pk }}/800/200" alt="Card image cap">
+            <!-- 800*200 앞에다가 시드 번호를 주면 랜덤이 아니라 고정 -->
+            {% endif %}
 
         <hr>
 
         <!-- Post Content -->
         <p>{{ post.content }}</p>
+
+        {% if post.attached_file %}
+            <a href="{{ post.attached_file.url }}" type="button" download="True" class="btn btn-outline-secondary">Download</a>
+            {{ post.get_file_name }}
+        {% endif %}
+
         <hr>
 
         <!-- Comments Form -->

@@ -1,3 +1,5 @@
+import os.path
+
 from django.db import models
 
 
@@ -16,6 +18,9 @@ class Post(models.Model):
     # methods
     def __str__(self):
         return f'[{self.pk}] {self.title}'
+
+    def get_file_name(self):
+        return os.path.basename(self.attached_file.name)
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'
