@@ -120,3 +120,8 @@ USE_TZ = False # 유저의 컴퓨터 시간대 반영
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# User media files
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '_media') # BASE_DIR은 프로젝트의 베이스 위치

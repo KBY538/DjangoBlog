@@ -135,3 +135,6 @@ dmypy.json
 # Django files
 # 형상관리 필요 없음
 migrations/
+
+# User contents
+_media/

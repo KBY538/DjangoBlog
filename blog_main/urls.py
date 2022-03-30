@@ -13,6 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings # settings.py 내용 가져오는 것
+from django.conf.urls.static import static
+
 from django.contrib import admin
 from django.urls import path, include
 
@@ -25,3 +28,5 @@ urlpatterns = [
 ] # 여기 우리가 처리할 패턴들을 적으면 된다.
 # 수행할 작업에 함수를 넣어 주는 것 -> FBV
 # 수행할 작업에 이미 만들어 놓은 뷰(클래스)를 넣어 주는 경우도 있다.
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # doucument_root이라는 property와 settings 안의 media url을 연결

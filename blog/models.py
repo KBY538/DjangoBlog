@@ -1,10 +1,14 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
+
+    head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)  # media파일 아래 어디에다가 피일을 저장할 것인가, 첨부하지 않아도 된다
+    attached_file = models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True) # 파일 하나만
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
