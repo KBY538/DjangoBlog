@@ -3,16 +3,6 @@ import os.path
 from django.contrib.auth.models import User
 from django.db import models
 
-
-# Create your models here.
-
-class Category(models.Model):
-    name = models.CharField(max_length=50, unique=True) # 같은 이름을 가진 카테고리가 여러 개 생기면 안 되니까 unique
-    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
-
-    def __str__(self):
-        return self.name
-
 class Post(models.Model):
     title = models.CharField(max_length=30)
     hook = models.TextField(blank=True)
