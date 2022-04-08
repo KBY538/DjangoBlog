@@ -16,6 +16,8 @@ class Tag(models.Model):
     def get_absolute_url(self):
         return f'blog/tag/{self.slug}/'
 
+    # tag는 그냥 뒤에 s 붙여도 되니까 Meta class 만들 필요 x
+
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True) # 같은 이름을 가진 카테고리가 여러 개 생기면 안 되니까 unique
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True) # 폼 나는 기능, 주소 자체에 제목이 들어가는 식으로 할 수 있는 기능.
@@ -60,7 +62,8 @@ class Post(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     # 카테고리 지워졌는데 글 다 날아가면 큰일
 
-    tag = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
+    # ManyToManyRel는 리버스라서 내가 참조당하고 있는 애를 찾는 것이다. 기본적으로 ManyToManyField를 사용한다고 보면 된다.
 
     # methods
     def __str__(self):
