@@ -12,6 +12,6 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin) # 쌍으로 묶어서 register
 
 class TagAdmin(admin.ModelAdmin):
-    propopulated_fields = {'slug':('name', )}
+    prepopulated_fields = {'slug':('name', )}
 
 admin.site.register(Tag, TagAdmin)

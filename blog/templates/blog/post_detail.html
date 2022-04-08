@@ -9,7 +9,7 @@
     <!-- Author -->
     <p class="lead">
       by
-      <a href="#">{{ p.author }}</a>
+      <a href="#">{{ post.author }}</a>
     </p>
 
     <hr>
@@ -36,6 +36,14 @@
     {% if post.attached_file %}
         <a href="{{ post.attached_file.url }}" type="button" download="True" class="btn btn-outline-secondary">Download</a>
         {{ post.get_file_name }}
+    {% endif %}
+
+    {% if post.tags.exists %}
+        <br/>
+        <i class = "fas fa-tags"></i>
+        {% for tag in post.tags.iterator %}
+            <a href = {{ tag.get_absolute_url }}>{{ tag }}</a>
+        {% endfor %}
     {% endif %}
 
     <hr>

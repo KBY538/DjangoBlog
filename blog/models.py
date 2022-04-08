@@ -14,7 +14,7 @@ class Tag(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'blog/tag/{self.slug}/'
+        return f'/blog/tag/{self.slug}'
 
     # tag는 그냥 뒤에 s 붙여도 되니까 Meta class 만들 필요 x
 

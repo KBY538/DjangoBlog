@@ -1,7 +1,7 @@
 from django.shortcuts import render # 템플릿을 클라이언트에 뿌려주는 흔히 쓰는 함수
 from django.views.generic import ListView, DetailView
 
-from .models import Post, Category
+from .models import Post, Category, Tag
 
 
 # 장고는 sql 쿼리를 직접 안 날려도 됨. 임포트만으로 db 연결. 다 메소드로 매핑되어있다.
@@ -82,5 +82,16 @@ def show_category_posts(request, slug):
         'no_category_post_count' : Post.objects.filter(category=None).count(),
         'category' : category,
         'post_list' : post_list
+    }
+    return render(request, 'blog/post_list.html', context)
+
+
+def show_tag_posts(request, slug):
+    tag = Tag.objects.get(slug=slug)
+    context = {
+        'categories': Category.objects.all(),
+        'no_category_post_count': Post.objects.filter(category=None).count(),
+        'tag': tag,
+        'post_list': tag.post_set.all()
     }
     return render(request, 'blog/post_list.html', context)
