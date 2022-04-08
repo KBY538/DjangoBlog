@@ -3,6 +3,19 @@ import os.path
 from django.contrib.auth.models import User
 from django.db import models
 
+
+# Create your models here.
+
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True) # 같은 이름을 가진 카테고리가 여러 개 생기면 안 되니까 unique
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True) # 폼 나는 기능, 주소 자체에 제목이 들어가는 식으로 할 수 있는 기능.
+    # url에 들어갈 수 없는 것: 공백문자, 따라서 name에 공백이 들어갈 경우 slug에 쓸 수 없다. name을 적당히 url에 맞는 형식으로 변환하는 cahracter field
+    # 한글이 지원 안 되는 경우 한글 발음대로 영문으로 변환해서 slug을 생성하기도 한다. 따라서 대부분의 개발자들이 slug을 name보다 길게 잡는다.
+    # 요즘은 대부분의 브라우저가 url이름을 한글로 할 수 있게 해줌, 근데 allow_unicode의 default 값은 False
+
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
     title = models.CharField(max_length=30)
     hook = models.TextField(blank=True)
