@@ -6,6 +6,16 @@ from django.db import models
 
 # Create your models here.
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f'blog/tag/{self.slug}/'
+
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True) # 같은 이름을 가진 카테고리가 여러 개 생기면 안 되니까 unique
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True) # 폼 나는 기능, 주소 자체에 제목이 들어가는 식으로 할 수 있는 기능.
@@ -15,6 +25,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return f'/blog/category/{self.slug}'
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -46,6 +59,8 @@ class Post(models.Model):
 
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     # 카테고리 지워졌는데 글 다 날아가면 큰일
+
+    tag = models.ManyToManyField(Tag, blank=True)
 
     # methods
     def __str__(self):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category
+from .models import Post, Category, Tag
 
 # Register your models here.
 admin.site.register(Post) # admin 사이트에 Post 등록하면 접근 가능한 인터페이스 자동 생성
@@ -10,3 +10,8 @@ class CategoryAdmin(admin.ModelAdmin):
     # slug을 name으로부터 생성해서 채우도록
 
 admin.site.register(Category, CategoryAdmin) # 쌍으로 묶어서 register
+
+class TagAdmin(admin.ModelAdmin):
+    propopulated_fields = {'slug':('name', )}
+
+admin.site.register(Tag, TagAdmin)
