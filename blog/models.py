@@ -16,6 +16,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+
 class Post(models.Model):
     title = models.CharField(max_length=30)
     hook = models.TextField(blank=True)
@@ -39,6 +43,9 @@ class Post(models.Model):
     # 프론트엔드 단에서와 서버 단에서 검증을 두 번 한다
     # 모델에 들어가기 전에 값이 비어있어도 되는가 여기서의 null 키워드는 서버의 모델에 저장할 때
     # 프론트 엔드 쪽에서 공란일 수 있는지 체크는 따로 있다. 그게 blank
+
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+    # 카테고리 지워졌는데 글 다 날아가면 큰일
 
     # methods
     def __str__(self):
