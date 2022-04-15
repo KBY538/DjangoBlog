@@ -16,6 +16,10 @@
 
     <!-- Date/Time -->
     <p>Posted on {{ post.created_at }}</p>
+    {% if user == post.author %}
+        <a class="btn btn_info btn-sm float-right" href="/blog/update_post/{{ post.pk }}"
+           role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Edit Post</a>
+    {% endif %}
 
     <hr>
 

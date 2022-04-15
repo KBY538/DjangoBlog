@@ -46,7 +46,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, blank=True, on_delete=models.SET_DEFAULT, default=1)
     # 기본 제공되는 user를 쓰면 로그인도 간단하게 처리된다.
     # on_delete 시, CASCADE함수를 실행. 콜백함수를 설정하는 것, CASCADE()하면 결과를 return해서 쓰는 게 된다. 커스텀 함수를 만들 수도있다. models에서
     # foreign key는 null이면 안 된다.

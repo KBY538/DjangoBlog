@@ -1,13 +1,45 @@
-from django.shortcuts import render # 템플릿을 클라이언트에 뿌려주는 흔히 쓰는 함수
-from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render, redirect  # 템플릿을 클라이언트에 뿌려주는 흔히 쓰는 함수
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .models import Post, Category, Tag
 
+# Create your views here.
+
+
+class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView): # Mixin이 로그인 안 된 사람을 로그인 페이지로 보냄
+    model = Post
+    fields = ['title', 'hook', 'content', 'head_image', 'attached_file', 'category'] # 필드를 오버라이드해주면 이에 대한 커맨드는 자동으로 구성
+
+    def test_func(self): # 뷰에 접근할 때 테스트
+        return self.request.user.is_superuser or self.request.user.is_staff
+
+    def form_valid(self, form): # 데이터 보낼 때, 폼에서 포스트할 때, 한 번 더 검증(get 통한 건 처리못함)
+        current_user = self.request.user # 리퀘스트 안에 들어 있는 유저 정보 가져오기
+
+        if current_user.is_authenticated and (current_user.is_superuser or current_user.is_staff):
+            form.instance.author = current_user # author 자리에 집어 넣는다.
+            return super(PostCreate, self).form_valid(form)
+        else:
+            return redirect('/blog/') # 권한 없으면
 
 # 장고는 sql 쿼리를 직접 안 날려도 됨. 임포트만으로 db 연결. 다 메소드로 매핑되어있다.
 # 복잡한 쿼리를 처리하고 싶다면 Post 안에 해당 쿼리를 처리하는 메소드를 만들면 됨
 
-# Create your views here.
+
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post # post 모델에 대해서 업데이트
+    fields = ['title', 'hook', 'content', 'head_image', 'attached_file', 'category'] # 어떤 값들이 업데이트 가능?
+    template_name = 'blog/post_form_update.html'
+
+    def dispatch(self, request, *args, **kwargs): # GET으로 들어오든 POST로 들어오든 뷰에 접근할 때 처리
+        current_user = request.user
+        if current_user.is_authenticated and current_user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+
 
 class PostList(ListView):
     model = Post
